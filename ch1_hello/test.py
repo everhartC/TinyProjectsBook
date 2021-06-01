@@ -13,14 +13,15 @@ def test_exists():
 
 
 def test_runnable():
+    """ Runs using python"""
     out = getoutput(f"python {prg}")
-    assert out.strip() == 'Hello, World!'
+    assert out.strip() == "Hello, World!"
 
 
 def test_executable():
-    #* Says 'Hello, World!' by default
+    """ Says 'hello world by default """
     
-    out = getoutput({prg})
+    out = getoutput(prg)
     assert out.strip() == 'Hello, World!'
 
 
@@ -30,3 +31,13 @@ def test_usage():
         rv, out = getstatusoutput(f'{prg} {flag}')
         assert rv == 0
         assert out.lower().startswith('usage')
+
+
+def test_input(): 
+    """ test for input """
+
+    for val in ['Universe', 'Multiverse']:
+        for option in ['-n', '--name']:
+            rv, out = getstatusoutput(f'{prg} {option} {val}')
+            assert rv == 0
+            assert out.strip() == f'Hello, {val}'
